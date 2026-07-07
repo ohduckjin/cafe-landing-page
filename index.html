@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>카페 온기 | 느린 아침을 위한 커피</title>
+<meta name="description" content="매일 아침 그날 로스팅한 원두로 내리는 동네 카페, 온기의 메뉴와 오시는 길.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#2B1B14;
+    --umber:#4A3226;
+    --parchment:#EDE4D3;
+    --paper:#F7F2E7;
+    --copper:#C97C4B;
+    --sage:#7C8B57;
+    --ink:#2B1B14;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    margin:0;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  a:focus-visible,button:focus-visible{
+    outline:3px solid var(--copper);
+    outline-offset:3px;
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+    background:linear-gradient(to bottom, rgba(43,27,20,0.75), rgba(43,27,20,0));
+    color:var(--parchment);
+  }
+  .nav__logo{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:0.02em;text-decoration:none;}
+  .nav__links{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+  .nav__links a{
+    text-decoration:none;font-size:0.9rem;font-weight:500;
+    border-bottom:1px solid transparent;padding-bottom:2px;
+    transition:border-color 0.2s ease;
+  }
+  .nav__links a:hover{border-color:var(--copper);}
+  @media (max-width:640px){ .nav__links{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    color:var(--parchment);
+    overflow:hidden;
+  }
+  .hero__img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .hero__scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(20,12,9,0.35) 0%, rgba(20,12,9,0.35) 45%, rgba(20,12,9,0.92) 100%);
+  }
+  .hero__content{position:relative;padding:0 24px 96px;max-width:1100px;margin:0 auto;width:100%;}
+  .hero__eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--copper);margin-bottom:18px;display:block;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 5rem);
+    font-weight:600;
+    max-width:14ch;
+  }
+  .hero__sub{
+    margin-top:20px;max-width:42ch;
+    font-size:1.05rem;color:rgba(237,228,211,0.85);
+  }
+  .hero__ctas{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:14px 28px;
+    border-radius:2px;
+    font-size:0.95rem;font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn--solid{background:var(--copper);color:var(--espresso);}
+  .btn--solid:hover{background:#dd8d5d;}
+  .btn--ghost{border-color:rgba(237,228,211,0.5);color:var(--parchment);}
+  .btn--ghost:hover{border-color:var(--parchment);}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- section basics ---------- */
+  section{padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--sage);display:block;margin-bottom:14px;
+  }
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:600;}
+
+  /* ---------- about ---------- */
+  .about{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+  .about__text p{font-size:1.02rem;color:#4a3226;max-width:52ch;}
+  .about__text p + p{margin-top:16px;}
+  .about__img{position:relative;}
+  .about__img img{border-radius:3px;box-shadow:0 24px 48px -20px rgba(43,27,20,0.4);}
+  @media (max-width:860px){ .about{grid-template-columns:1fr;} .about__img{order:-1;} }
+
+  /* ---------- menu (signature) ---------- */
+  .menu{background:var(--umber);color:var(--parchment);}
+  .menu .section-head .kicker{color:var(--copper);}
+  .menu .section-head h2{color:var(--parchment);}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  @media (max-width:860px){ .menu-grid{grid-template-columns:1fr;} }
+
+  .receipt{
+    position:relative;
+    background:var(--paper);
+    color:var(--espresso);
+    padding:32px 28px 40px;
+    transform:rotate(var(--tilt,-1deg));
+    box-shadow:0 20px 40px -16px rgba(0,0,0,0.45);
+  }
+  .receipt:nth-child(2){--tilt:0.6deg;}
+  .receipt:nth-child(3){--tilt:-0.4deg;}
+  .receipt::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-9px;height:16px;
+    background:
+      linear-gradient(-45deg, var(--paper) 8px, transparent 0) 0 -4px / 16px 16px repeat-x,
+      linear-gradient(45deg, var(--paper) 8px, transparent 0) 0 -4px / 16px 16px repeat-x;
+  }
+  .receipt h3{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.85rem;letter-spacing:0.14em;text-transform:uppercase;
+    border-bottom:1px dashed rgba(43,27,20,0.35);
+    padding-bottom:14px;margin-bottom:14px;
+  }
+  .receipt ul{list-style:none;margin:0;padding:0;}
+  .receipt li{
+    display:flex;align-items:baseline;gap:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.88rem;
+    padding:9px 0;
+  }
+  .receipt li .name{flex-shrink:0;}
+  .receipt li .dots{
+    flex:1;border-bottom:1px dotted rgba(43,27,20,0.4);
+    transform:translateY(-4px);
+  }
+  .receipt li .price{flex-shrink:0;font-weight:500;}
+  .menu-note{
+    margin-top:40px;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;
+    color:rgba(237,228,211,0.65);
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .gallery-grid figure{margin:0;overflow:hidden;border-radius:3px;aspect-ratio:4/5;}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+  .gallery-grid figure:hover img{transform:scale(1.06);}
+  @media (max-width:860px){ .gallery-grid{grid-template-columns:1fr 1fr;} .gallery-grid figure:first-child{grid-column:1/-1;aspect-ratio:16/9;} }
+
+  /* ---------- location ---------- */
+  .location{background:var(--espresso);color:var(--parchment);}
+  .location-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .location dl{display:grid;grid-template-columns:auto 1fr;gap:12px 24px;margin:0;}
+  .location dt{
+    font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--copper);align-self:start;padding-top:2px;
+  }
+  .location dd{margin:0;font-size:1rem;color:rgba(237,228,211,0.9);}
+  @media (max-width:860px){ .location-grid{grid-template-columns:1fr;gap:40px;} }
+
+  footer{
+    background:var(--espresso);color:rgba(237,228,211,0.55);
+    padding:28px 0 40px;font-size:0.82rem;text-align:center;
+    border-top:1px solid rgba(237,228,211,0.12);
+  }
+</style>
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav__logo" href="#top">카페 온기</a>
+    <ul class="nav__links">
+      <li><a href="#about">이야기</a></li>
+      <li><a href="#menu">메뉴</a></li>
+      <li><a href="#gallery">공간</a></li>
+      <li><a href="#location">오시는 길</a></li>
+    </ul>
+  </header>
+
+  <section class="hero" id="top">
+    <img class="hero__img" src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1800&q=80" alt="어두운 배경에서 김이 올라오는 커피 한 잔" loading="eager">
+    <div class="hero__scrim"></div>
+    <div class="hero__content">
+      <span class="hero__eyebrow">동네 작은 카페</span>
+      <h1>느린 아침을<br>위한 커피</h1>
+      <p class="hero__sub">원두 본연의 향을 살려 매일 아침 직접 로스팅합니다. 오늘 내린 만큼만, 딱 그만큼만 팝니다.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--solid" href="#menu">메뉴 보기</a>
+        <a class="btn btn--ghost" href="#location">오시는 길</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about">
+      <div class="about__text reveal">
+        <span class="section-head kicker">이야기</span>
+        <h2>우리가 커피를 내리는 방식</h2>
+        <p>온기는 하루 한 번, 그날 로스팅한 원두만 사용합니다. 필요한 만큼만 내리고 남는 원두는 다음 날 직원들과 나눠 마십니다.</p>
+        <p>빠르게 파는 커피가 아니라 천천히 마시는 커피를 만듭니다. 자리에 앉아 잔이 비워질 때까지, 그 시간을 지켜드립니다.</p>
+      </div>
+      <div class="about__img reveal">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80" alt="갓 로스팅한 원두가 쌓여 있는 모습" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">메뉴</span>
+        <h2>매일 만드는 메뉴</h2>
+      </div>
+      <div class="menu-grid">
+        <div class="receipt reveal">
+          <h3>커피</h3>
+          <ul>
+            <li><span class="name">드립 커피</span><span class="dots"></span><span class="price">5,000</span></li>
+            <li><span class="name">아메리카노</span><span class="dots"></span><span class="price">4,500</span></li>
+            <li><span class="name">카페라떼</span><span class="dots"></span><span class="price">5,500</span></li>
+            <li><span class="name">콜드브루</span><span class="dots"></span><span class="price">5,500</span></li>
+          </ul>
+        </div>
+        <div class="receipt reveal">
+          <h3>논커피</h3>
+          <ul>
+            <li><span class="name">얼그레이 티</span><span class="dots"></span><span class="price">5,000</span></li>
+            <li><span class="name">유자차</span><span class="dots"></span><span class="price">5,500</span></li>
+            <li><span class="name">핫초코</span><span class="dots"></span><span class="price">5,500</span></li>
+          </ul>
+        </div>
+        <div class="receipt reveal">
+          <h3>디저트</h3>
+          <ul>
+            <li><span class="name">바스크 치즈케이크</span><span class="dots"></span><span class="price">6,500</span></li>
+            <li><span class="name">크루아상</span><span class="dots"></span><span class="price">4,000</span></li>
+            <li><span class="name">스콘</span><span class="dots"></span><span class="price">4,000</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="menu-note">가격에는 부가세가 포함되어 있습니다. 원두 소진 시 드립 커피 판매가 조기 마감될 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">공간</span>
+        <h2>온기의 공간</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=1000&q=80" alt="원목 테이블과 의자가 놓인 카페 내부" loading="lazy">
+        </figure>
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&w=800&q=80" alt="위에서 내려다본 라떼 아트" loading="lazy">
+        </figure>
+        <figure class="reveal">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="창가 테이블에 놓인 커피 한 잔" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="location" id="location">
+    <div class="wrap location-grid">
+      <div class="reveal">
+        <span class="section-head kicker">오시는 길</span>
+        <h2>매일, 문을 엽니다</h2>
+      </div>
+      <dl class="reveal">
+        <dt>주소</dt>
+        <dd>서울시 마포구 동교로 123</dd>
+        <dt>영업시간</dt>
+        <dd>매일 08:00 - 20:00 (연중무휴)</dd>
+        <dt>전화</dt>
+        <dd>02-123-4567</dd>
+        <dt>주차</dt>
+        <dd>매장 앞 2대 가능 (만차 시 인근 공영주차장 이용)</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© 2026 카페 온기. All rights reserved.</div>
+  </footer>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
